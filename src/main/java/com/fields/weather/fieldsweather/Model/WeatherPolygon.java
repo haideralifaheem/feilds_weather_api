@@ -3,50 +3,56 @@ package com.fields.weather.fieldsweather.Model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mongodb.lang.NonNull;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "FieldTable")
-public class Field implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+@Document(collection = "WeatherPolygon")
+public class WeatherPolygon implements Serializable {
     @Id
     private String id;
     @NonNull
     private String name;
-    
-    private Date created;
+
+    public Date created_at;
     private String updated;
     private String countryCode;
 
-    private Boundary boundaries;
-
-    /*@NonNull
-    @DBRef
-    private List<Actor> actors;
     @NonNull
-    @DBRef
-    private List<Director> directors;*/
-   
+    public GeoJson geo_json;
 
-    public Field() {
+    private List<Double> center;
+    private double area;
+    public String user_id;
+
+   
+      @NonNull
+      @DBRef public Field field;
+     /* 
+     * @NonNull
+     * 
+     * @DBRef private List<Director> directors;
+     */
+
+    public WeatherPolygon() {
     }
 
-    public Field(String name, Date created, String updated, String countryCode,Boundary boundaries) {
+    public WeatherPolygon(String name, Date created, String updated, String countryCode, GeoJson geoJson,
+            List<Double> center, Double area, String user_id) {
         this.name = name;
         this.created = created;
         this.updated = updated;
         this.countryCode = countryCode;
-        this.boundaries =boundaries;
-        
+        this.geo_Json = geoJson;
+        this.center = center;
+        this.area = area;
+        this.user_id = user_id;
+
     }
 
     public String getId() {
@@ -73,7 +79,6 @@ public class Field implements Serializable {
         this.countryCode = countryCode;
     }
 
-   
     public Date getCreated() {
         return created;
     }
@@ -90,12 +95,36 @@ public class Field implements Serializable {
         this.updated = updated;
     }
 
-    public Boundary getBoundries() {
-        return boundaries;
+   /* public GeoJson getGeoJson() {
+        return geo_Json;
     }
 
-    public void setBoundaries(Boundary boundaries) {
-        this.boundaries = boundaries;
+    public void setGeoJson(GeoJson geoJson) {
+        this.geo_Json = geoJson;
+    }*/
+
+    public List<Double> getCenter() {
+        return center;
     }
+
+    public void setCenter(List<Double> center) {
+        this.center = center;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
+
+    /*public String getUserID() {
+        return user_id;
+    }
+
+    public void setUserID(String userid) {
+        this.user_id = userid;
+    }*/
 
 }

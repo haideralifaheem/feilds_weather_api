@@ -6,25 +6,33 @@ import java.util.List;
 import javax.persistence.EntityNotFoundException;
 
 import com.fields.weather.fieldsweather.Model.Field;
+import com.fields.weather.fieldsweather.Model.WeatherPolygon;
 import com.fields.weather.fieldsweather.Service.Interface.iFieldService;
 import com.fields.weather.fieldsweather.repository.FieldRepository;
+import com.fields.weather.fieldsweather.repository.WeatherRepository;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class FieldService implements iFieldService {
 
-    private final static int HISTORY_DAYS_COUNT = 7;
 
-    //private final WeatherClient weatherClient = new AgroMonitoringClient();
+    private final AgroMonitoringService weatherService = new AgroMonitoringService();
     @Autowired
     private final FieldRepository fieldRepository;
 
     @Autowired
-    public FieldService(FieldRepository fieldRepository) {
+    private final WeatherRepository weatherRepository;
+
+    @Autowired
+    public FieldService(FieldRepository fieldRepository,WeatherRepository weatherRepository) {
         this.fieldRepository = fieldRepository;
+        this.weatherRepository = weatherRepository;
     }
 
 
@@ -47,13 +55,20 @@ public class FieldService implements iFieldService {
 
 
     public Field save(Field field) {
+        WeatherPolygon createdPolygon = weatherService.createPolygon(field);
+        createdPolygon.field = field;
+        weatherRepository.save(createdPolygon);
         return fieldRepository.save(field);
     }
 
 
     public Field update(Field field, String fieldId) {
         if (fieldRepository.existsById(fieldId)) {
-            field.setId(fieldId);
+            WeatherPolygon exitingPolygon = weatherRepository.findWeatherPolygonByFieldid(fieldId);
+            weatherRepository.delete(exitingPolygon);
+            WeatherPolygon newPolygon = weatherService.createPolygon(field);
+            newPolygon.field=field;
+            weatherRepository.save(newPolygon);
             fieldRepository.save(field);
             return field;
         } else {
