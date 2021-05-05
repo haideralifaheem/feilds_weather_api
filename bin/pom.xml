@@ -9,8 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fields.weather</groupId>
-	<artifactId>fieldsWeather</artifactId>
+	<artifactId>fieldsweather</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>fieldsweather</name>
 	<description>Rest Api to save fields info and retrieve weather</description>
 	<properties>
 		<java.version>11</java.version>
@@ -33,7 +34,8 @@
 		<dependency>
 			<groupId>javax.persistence</groupId>
 			<artifactId>javax.persistence-api</artifactId>
-			</dependency>
+			<version>2.2</version>
+		</dependency>
 	
 		<dependency>
             <groupId>com.mangofactory</groupId>

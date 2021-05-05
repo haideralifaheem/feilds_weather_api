@@ -18,15 +18,15 @@ public class Field implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String Id;
+    private String id;
     @NonNull
     private String name;
     
     private Date created;
-    private Date updated;
+    private String updated;
     private String countryCode;
 
-    private Boundary Boundries;
+    private Boundary boundaries;
 
     /*@NonNull
     @DBRef
@@ -39,21 +39,21 @@ public class Field implements Serializable {
     public Field() {
     }
 
-    public Field(String name, Date created, Date updated, String countryCode,Boundary boundry) {
+    public Field(String name, Date created, String updated, String countryCode,Boundary boundaries) {
         this.name = name;
         this.created = created;
         this.updated = updated;
         this.countryCode = countryCode;
-        this.Boundries =boundry;
+        this.boundaries =boundaries;
         
     }
 
-    public String getfieldId() {
-        return Id;
+    public String getId() {
+        return id;
     }
 
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -73,28 +73,28 @@ public class Field implements Serializable {
     }
 
    
-    public Date getCreatedDate() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreatedDate(Date created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
-    public Date getUpdatedDate() {
+    public String getUpdated() {
         return updated;
     }
 
-    public void setUpdatedDate(Date updated) {
+    public void setUpdated(String updated) {
         this.updated = updated;
     }
 
     public Boundary getBoundries() {
-        return Boundries;
+        return boundaries;
     }
 
-    public void setUpdatedDate(Boundary boundary) {
-        this.Boundries = boundary;
+    public void setBoundaries(Boundary boundaries) {
+        this.boundaries = boundaries;
     }
 
 }

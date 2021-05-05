@@ -27,7 +27,7 @@ public class FieldsweatherApplication {
 	
 	@Bean
 	public SwaggerSpringMvcPlugin groupOnePlugin() {
-		return new SwaggerSpringMvcPlugin(swaggerConfig).includePatterns("/Field.*?")
+		return new SwaggerSpringMvcPlugin(swaggerConfig).includePatterns("/fields.*?")
 				.swaggerGroup("admin");
 	}
 }

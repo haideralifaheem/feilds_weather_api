@@ -10,7 +10,7 @@ public interface iFieldService {
 
     Field findById(String fieldId);
     
-    Field findByName(String name);
+    List<Field> findByName(String name);
     
     Field save(Field field);
 

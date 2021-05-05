@@ -5,60 +5,61 @@ import java.util.Date;
 import java.util.UUID;
 import com.mongodb.lang.NonNull;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.geo.GeoJsonPolygon;
+
+
 
 public class Boundary implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String Id;
+    private String id;
     
     private Date created;
     private Date updated;
     @NonNull
-    private GeoJsonPolygon Area;
+    private GeoJson geoJson;
 
     public Boundary()
     {
 
     }
 
-    public Boundary(String id, String name, Date created, Date updated, GeoJsonPolygon area) {
-        this.Id = id;
+    public Boundary(String id, String name, Date created, Date updated, GeoJson geoJson) {
+        this.id = id;
         this.created = created;
         this.updated = updated;
-        this.Area = area;
+        this.geoJson = geoJson;
     }
 
-    public String getfieldId() {
-        return Id;
+    public String getId() {
+        return id;
     }
 
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
    
-    public Date getCreatedDate() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreatedDate(Date created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
-    public Date getUpdatedDate() {
+    public Date getUpdated() {
         return updated;
     }
 
-    public void setUpdatedDate(Date updated) {
+    public void setUpdated(Date updated) {
         this.updated = updated;
     }
 
-    public GeoJsonPolygon getArea() {
-        return Area;
+    public GeoJson getGeoJson() {
+        return geoJson;
     }
 
-    public void setArea(GeoJsonPolygon Area) {
-        this.Area = Area;
+    public void setGeoJson(GeoJson geoJson) {
+        this.geoJson = geoJson;
     }
 }

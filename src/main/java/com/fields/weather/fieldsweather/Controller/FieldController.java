@@ -18,9 +18,9 @@ import com.fields.weather.fieldsweather.Service.FieldService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 
-@Api(value = "Field")
+@Api(value = "fields")
 @RestController
-@RequestMapping("/Field")
+@RequestMapping("/fields")
 public class FieldController {
 
 	@Autowired
@@ -29,16 +29,16 @@ public class FieldController {
 	@ApiOperation(value = "Find Field by ID")
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/{fieldId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Field get(@PathVariable(value = "fieldid") String fieldid) {
+	public Field get(@PathVariable(value = "fieldId") String fieldid) {
 		Field field = fieldService.findById(fieldid);
 		return field;
 	}
 
 	@ApiOperation(value = "Find Field by Name")
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(value = "Title/{title}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Field getbyTitle(@PathVariable(value = "name") String name) {
-		Field field = fieldService.findByName(name);
+	@RequestMapping(value = "Name/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Field> getbyTitle(@PathVariable(value = "name") String name) {
+		List<Field> field = fieldService.findByName(name);
 		return field;
 	}
 
@@ -54,7 +54,7 @@ public class FieldController {
 
 	@ApiOperation(value = "Add a new Field")
 	@ResponseStatus(HttpStatus.OK)
-	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/save",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Field create(@RequestBody Field field) throws Exception {
 		Field createdField = fieldService.save(field);
 		return createdField;
