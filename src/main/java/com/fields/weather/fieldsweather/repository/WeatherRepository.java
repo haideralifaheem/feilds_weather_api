@@ -1,6 +1,5 @@
 package com.fields.weather.fieldsweather.repository;
 
-import com.fields.weather.fieldsweather.Model.Field;
 import com.fields.weather.fieldsweather.Model.WeatherPolygon;
 
 import org.springframework.data.mongodb.repository.MongoRepository;

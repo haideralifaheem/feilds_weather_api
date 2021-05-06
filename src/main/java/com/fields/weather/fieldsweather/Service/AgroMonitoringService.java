@@ -1,24 +1,25 @@
 package com.fields.weather.fieldsweather.Service;
 
-import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fields.weather.fieldsweather.Model.Field;
-import com.fields.weather.fieldsweather.Model.WeatherDetail;
+import com.fields.weather.fieldsweather.Model.WeatherHistory;
 import com.fields.weather.fieldsweather.Model.WeatherPolygon;
 import com.fields.weather.fieldsweather.Service.Interface.IAgroMoniteringService;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 public class AgroMonitoringService implements IAgroMoniteringService {
-    private final static String PERSONAL_API_KEY = "7211e78911af030e76b4824fa88bda70";
+    private final static String PERSONAL_API_KEY = "Test_API_Key";
 
     private final RestTemplate restTemplate;
 
@@ -28,7 +29,8 @@ public class AgroMonitoringService implements IAgroMoniteringService {
 
     @Override
     public WeatherPolygon createPolygon(Field field) {
-        String url = "http://api.agromonitoring.com/agro/1.0/polygons";
+        String url =  "http://demo8720528.mockable.io/polygon";
+        //String url = "http://api.agromonitoring.com/agro/1.0/polygons";
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("appid", PERSONAL_API_KEY);
@@ -49,14 +51,15 @@ public class AgroMonitoringService implements IAgroMoniteringService {
     }
 
     @Override
-    public List<WeatherDetail> weatherHistory(String polygonId, String startDay, String endDay) {
-        String url = "http://api.agromonitoring.com/agro/1.0/weather/history";
+    public List<WeatherHistory> weatherHistory(String polygonId, Date startDay, Date endDay) {
+        String url = "http://demo8720528.mockable.io/weatherHistory";
+        //String url = "http://api.agromonitoring.com/agro/1.0/weather/history";
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("appid", PERSONAL_API_KEY)
                 .queryParam("polyid", polygonId)
-                .queryParam("start", startDay)
-                .queryParam("end", endDay);
+                .queryParam("start", startDay.getTime()) 
+                .queryParam("end", endDay.getTime());
 
         ResponseEntity<String> responseEntity =
                 restTemplate.getForEntity(uriBuilder.toUriString(), String.class);
@@ -81,7 +84,25 @@ public class AgroMonitoringService implements IAgroMoniteringService {
     }
         
     //Todo Parse the weather data and create a list of Weather
-    private List<WeatherDetail> getWeatherList(String data) {
-        return new ArrayList<>();
+    private List<WeatherHistory> getWeatherList(String data) {
+        List<WeatherHistory> weatherHistories = new ArrayList<WeatherHistory>();
+        JsonArray convertedData = new Gson().fromJson(data, JsonArray.class);
+        for (JsonElement jsonElement : convertedData) {
+            JsonObject weatherElement =jsonElement.getAsJsonObject();
+            String timestemp = weatherElement.get("dt").getAsString();
+            JsonObject weatherMain = weatherElement.get("main").getAsJsonObject();
+            Double temperature = weatherMain.get("temp").getAsDouble();
+            Integer humidity = weatherMain.get("humidity").getAsInt();
+            Double temperatureMax = weatherMain.get("temp_min").getAsDouble();
+            Double temperatureMin = weatherMain.get("temp_max").getAsDouble();
+            
+            WeatherHistory history = new WeatherHistory(timestemp, temperature, humidity, temperatureMax, temperatureMin);
+            
+            weatherHistories.add(history);
+            
+        }
+        
+        return weatherHistories;
+        
     }
 }

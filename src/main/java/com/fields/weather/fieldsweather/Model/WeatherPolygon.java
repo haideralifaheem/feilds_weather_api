@@ -6,10 +6,8 @@ import java.util.List;
 
 import javax.persistence.Id;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mongodb.lang.NonNull;
 
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "WeatherPolygon")
@@ -31,8 +29,8 @@ public class WeatherPolygon implements Serializable {
     public String user_id;
 
    
-      @NonNull
-      @DBRef public Field field;
+      /*@NonNull
+      @DBRef public Field field;*/
      /* 
      * @NonNull
      * 
@@ -45,10 +43,10 @@ public class WeatherPolygon implements Serializable {
     public WeatherPolygon(String name, Date created, String updated, String countryCode, GeoJson geoJson,
             List<Double> center, Double area, String user_id) {
         this.name = name;
-        this.created = created;
+        this.created_at = created;
         this.updated = updated;
         this.countryCode = countryCode;
-        this.geo_Json = geoJson;
+        this.geo_json = geoJson;
         this.center = center;
         this.area = area;
         this.user_id = user_id;
@@ -80,11 +78,11 @@ public class WeatherPolygon implements Serializable {
     }
 
     public Date getCreated() {
-        return created;
+        return created_at;
     }
 
     public void setCreated(Date created) {
-        this.created = created;
+        this.created_at = created;
     }
 
     public String getUpdated() {

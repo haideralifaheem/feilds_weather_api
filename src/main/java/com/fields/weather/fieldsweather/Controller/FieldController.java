@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fields.weather.fieldsweather.Model.Field;
+import com.fields.weather.fieldsweather.Model.WeatherHistory;
 import com.fields.weather.fieldsweather.Service.FieldService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -59,10 +60,25 @@ public class FieldController {
 		return createdField;
 	}
 
+	@ApiOperation(value = "Add a new Field")
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/update/{fieldId}",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Field Update(@RequestBody Field field,@PathVariable(value = "fieldId") String fieldId) throws Exception {
+		Field updatedField = fieldService.update(field,fieldId);
+		return updatedField;
+	}
+
 	@ApiOperation(value = "Delete Field by ID")
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/{fieldId}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable(value = "fieldId") String fieldId) {
 		fieldService.delete(fieldId);
+	}
+
+	@ApiOperation(value = "Get Weather History by Field ID")
+	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/{fieldId}/weather", method = RequestMethod.GET)
+	public List<WeatherHistory> WeatherHistory(@PathVariable(value = "fieldId") String fieldId) {
+		return fieldService.WeatherHistory(fieldId);
 	}
 }

@@ -2,7 +2,6 @@ package com.fields.weather.fieldsweather.Model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 import com.mongodb.lang.NonNull;
 import org.springframework.data.annotation.Id;
 

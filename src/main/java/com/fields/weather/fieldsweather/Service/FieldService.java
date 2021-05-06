@@ -1,20 +1,20 @@
 package com.fields.weather.fieldsweather.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityNotFoundException;
 
 import com.fields.weather.fieldsweather.Model.Field;
+import com.fields.weather.fieldsweather.Model.WeatherHistory;
 import com.fields.weather.fieldsweather.Model.WeatherPolygon;
 import com.fields.weather.fieldsweather.Service.Interface.iFieldService;
 import com.fields.weather.fieldsweather.repository.FieldRepository;
 import com.fields.weather.fieldsweather.repository.WeatherRepository;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 
@@ -55,19 +55,29 @@ public class FieldService implements iFieldService {
 
 
     public Field save(Field field) {
-        WeatherPolygon createdPolygon = weatherService.createPolygon(field);
-        createdPolygon.field = field;
-        weatherRepository.save(createdPolygon);
-        return fieldRepository.save(field);
+        if (fieldRepository.existsById(field.getId())) {
+            return update(field, field.getId());
+        }
+        else{
+            WeatherPolygon createdPolygon = weatherService.createPolygon(field);
+            weatherRepository.save(createdPolygon);
+            field.agroPolygon = createdPolygon  ;
+            return fieldRepository.save(field);
+        }
+        
     }
 
 
     public Field update(Field field, String fieldId) {
         if (fieldRepository.existsById(fieldId)) {
-            WeatherPolygon exitingPolygon = weatherRepository.findWeatherPolygonByFieldid(fieldId);
-            weatherRepository.delete(exitingPolygon);
+            Field oldfield=fieldRepository.findById(fieldId)
+            .orElseThrow(() -> new EntityNotFoundException("Field not found: " + fieldId.toString()));
+            if(oldfield.agroPolygon!=null)
+            {
+                weatherRepository.delete(oldfield.agroPolygon);
+            }
             WeatherPolygon newPolygon = weatherService.createPolygon(field);
-            newPolygon.field=field;
+            field.agroPolygon=newPolygon;
             weatherRepository.save(newPolygon);
             fieldRepository.save(field);
             return field;
@@ -79,6 +89,20 @@ public class FieldService implements iFieldService {
     public void delete(String fieldId) {
         if (fieldRepository.existsById(fieldId)) {
             fieldRepository.deleteById(fieldId);
+        } else {
+            throw new EntityNotFoundException("Field not found: " + fieldId.toString());
+        }
+    }
+
+    public List<WeatherHistory> WeatherHistory(String fieldId) {
+        Field field=fieldRepository.findById(fieldId).get();
+        if (field!=null) {
+            Date currentDate = new Date();
+            Calendar c = Calendar.getInstance();
+            c.setTime(currentDate);
+            c.add(Calendar.DAY_OF_MONTH, -7);
+            Date startDate = c.getTime();
+            return weatherService.weatherHistory(field.agroPolygon.getId(),startDate,currentDate);
         } else {
             throw new EntityNotFoundException("Field not found: " + fieldId.toString());
         }

@@ -2,10 +2,6 @@ package com.fields.weather.fieldsweather.Model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mongodb.lang.NonNull;
 
@@ -32,9 +28,10 @@ public class Field implements Serializable {
     /*@NonNull
     @DBRef
     private List<Actor> actors;
-    @NonNull
+    @NonNull*/
+    @JsonIgnore
     @DBRef
-    private List<Director> directors;*/
+    public WeatherPolygon agroPolygon;
    
 
     public Field() {
