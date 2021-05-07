@@ -88,6 +88,8 @@ public class FieldService implements iFieldService {
 
     public void delete(String fieldId) {
         if (fieldRepository.existsById(fieldId)) {
+            Field field =findById(fieldId);
+            weatherRepository.delete(field.agroPolygon);
             fieldRepository.deleteById(fieldId);
         } else {
             throw new EntityNotFoundException("Field not found: " + fieldId.toString());

@@ -60,7 +60,7 @@ public class FieldController {
 		return createdField;
 	}
 
-	@ApiOperation(value = "Add a new Field")
+	@ApiOperation(value = "Update a Field")
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/update/{fieldId}",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Field Update(@RequestBody Field field,@PathVariable(value = "fieldId") String fieldId) throws Exception {
