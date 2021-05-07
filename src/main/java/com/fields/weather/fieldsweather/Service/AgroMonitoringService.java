@@ -1,6 +1,9 @@
 package com.fields.weather.fieldsweather.Service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,10 +20,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 public class AgroMonitoringService implements IAgroMoniteringService {
-    private final static String PERSONAL_API_KEY = "Test_API_Key";
-
+    
+    public static String PERSONAL_API_KEY="API_Key";
+    public  static String create_polygon_Url="http://demo8720528.mockable.io/polygon";
+    public static String weather_history_Url="http://demo8720528.mockable.io/weatherHistory";
     private final RestTemplate restTemplate;
 
     public AgroMonitoringService() {
@@ -29,10 +33,10 @@ public class AgroMonitoringService implements IAgroMoniteringService {
 
     @Override
     public WeatherPolygon createPolygon(Field field) {
-        String url =  "http://demo8720528.mockable.io/polygon";
+        //String url =  "http://demo8720528.mockable.io/polygon";
         //String url = "http://api.agromonitoring.com/agro/1.0/polygons";
 
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(create_polygon_Url)
                 .queryParam("appid", PERSONAL_API_KEY);
 
         HttpHeaders headers = new HttpHeaders();
@@ -52,10 +56,10 @@ public class AgroMonitoringService implements IAgroMoniteringService {
 
     @Override
     public List<WeatherHistory> weatherHistory(String polygonId, Date startDay, Date endDay) {
-        String url = "http://demo8720528.mockable.io/weatherHistory";
+        //String url = "http://demo8720528.mockable.io/weatherHistory";
         //String url = "http://api.agromonitoring.com/agro/1.0/weather/history";
 
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(weather_history_Url)
                 .queryParam("appid", PERSONAL_API_KEY)
                 .queryParam("polyid", polygonId)
                 .queryParam("start", startDay.getTime()) 

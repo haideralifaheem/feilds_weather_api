@@ -5,6 +5,7 @@ import com.mangofactory.swagger.plugin.EnableSwagger;
 import com.mangofactory.swagger.plugin.SwaggerSpringMvcPlugin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,11 +19,12 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = { "com.fields.weather.fieldsweather" })
 @SpringBootApplication
 public class FieldsweatherApplication {
-
+	
 	@Autowired
 	private SpringSwaggerConfig swaggerConfig;
 	public static void main(String[] args) {
 		SpringApplication.run(FieldsweatherApplication.class, args);
+		
 	}
 	
 	@Bean
