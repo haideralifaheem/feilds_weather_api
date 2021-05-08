@@ -1,12 +1,6 @@
-# Spring Boot REST API with Mongodb database
-# How to get this project
-you could clone the project
 
-```sh
-git clone https://github.com/haideralifaheem/fields_weather_api.git
-```
+# Field Weather API Spring Boot REST with Mongodb database
 
-# Field Weather API
 
 Field Weather APi is based on spring boot REST application architecture.API main goal is to provide single REST end point to create new Field Data into Mongodb DataBase.
 Rest micro service also call Agro Montering Service to create polygone.
@@ -17,6 +11,12 @@ Project Prerequisits
 Assumptions, Limitations and Facts:
 1. Springboot 2.3.4 and Java 11 for this project.
 2. Mongodb database(local or online cluster).collection name is Fields
+
+you could clone the project
+
+```sh
+git clone https://github.com/haideralifaheem/fields_weather_api.git
+```
 
 for testing the Agro Weather Monitering service i used https://www.mockable.io/
 i have created 2 mockable,1 for polygon and other for weather history.
