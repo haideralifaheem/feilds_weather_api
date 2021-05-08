@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "4737645d-7d14-4f3b-944e-7086f0a9eccc",
+		"name": "FieldsRequests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "weatherApiCall",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://api.agromonitoring.com/agro/1.0/polygons?appid=",
+					"protocol": "http",
+					"host": [
+						"api",
+						"agromonitoring",
+						"com"
+					],
+					"path": [
+						"agro",
+						"1.0",
+						"polygons"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateField",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": \"a0f63e74-d7ef-4924-acb3-0e770ae9ec98\",\r\n\"name\": \"Potato field\",\r\n\"created\": \"2020-07-25T10:03:56.782Z\",\r\n\"updated\": \"\",\r\n\"countryCode\": \"DEU\",\r\n\"boundaries\": {\r\n\"id\": \"a0f63e74-d7ef-4924-acb3-0e960ae9ec98\",\r\n\"created\": \"2020-07-25T10:03:56.782Z\",\r\n\"updated\": \"\",\r\n\"geoJson\": {\r\n\"type\": \"Feature\",\r\n\"properties\": {},\r\n\"geometry\": {\r\n\"type\": \"Polygon\",\r\n\"coordinates\": [\r\n[\r\n[-5.553604888914691, 33.88229680420605],\r\n[-5.5516736984239685, 33.88229680420605],\r\n[-5.5516736984239685, 33.88372189858022],\r\n[-5.555965232847882, 33.88390003370375],\r\n[-5.555965232847882, 33.88229680420605],\r\n[-5.553604888914691, 33.88229680420605]\r\n]\r\n]\r\n}\r\n}\r\n}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8889/fields/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8889",
+					"path": [
+						"fields",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreatePolygon",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"Potato field\",\"geo_json\":{\"type\":\"Feature\",\"properties\":{},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[-5.553604888914691,33.88229680420605],[-5.5516736984239685,33.88229680420605],[-5.5516736984239685,33.88372189858022],[-5.555965232847882,33.88390003370375],[-5.555965232847882,33.88229680420605],[-5.553604888914691,33.88229680420605]]]},\"name\":\"Potato field\"}}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://api.agromonitoring.com/agro/1.0/polygons?appid=",
+					"protocol": "http",
+					"host": [
+						"api",
+						"agromonitoring",
+						"com"
+					],
+					"path": [
+						"agro",
+						"1.0",
+						"polygons"
+					],
+					"query": [
+						{
+							"key": "appid",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateField",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": \"a0f63e74-d7ef-4924-acb3-0e770ae9ec98\",\r\n\"name\": \"My Potato field\",\r\n\"created\": \"2020-07-25T10:03:56.782Z\",\r\n\"updated\": \"\",\r\n\"countryCode\": \"DEU\",\r\n\"boundaries\": {\r\n\"id\": \"a0f63e74-d7ef-4924-acb3-0e960ae9ec98\",\r\n\"created\": \"2020-07-25T10:03:56.782Z\",\r\n\"updated\": \"\",\r\n\"geoJson\": {\r\n\"type\": \"Feature\",\r\n\"properties\": {},\r\n\"geometry\": {\r\n\"type\": \"Polygon\",\r\n\"coordinates\": [\r\n[\r\n[-5.553604888914691, 33.88229680420605],\r\n[-5.5516736984239685, 33.88229680420605],\r\n[-5.5516736984239685, 33.88372189858022],\r\n[-5.555965232847882, 33.88390003370375],\r\n[-5.555965232847882, 33.88229680420605],\r\n[-5.553604888914691, 33.88229680420605]\r\n]\r\n]\r\n}\r\n}\r\n}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8889/fields/update/a0f63e74-d7ef-4924-acb3-0e770ae9ec98",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8889",
+					"path": [
+						"fields",
+						"update",
+						"a0f63e74-d7ef-4924-acb3-0e770ae9ec98"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "weatherHistory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8889/fields/a0f63e74-d7ef-4924-acb3-0e770ae9ec98/weather",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8889",
+					"path": [
+						"fields",
+						"a0f63e74-d7ef-4924-acb3-0e770ae9ec98",
+						"weather"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "WeatherHistoryMock",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://demo8720528.mockable.io/weatherHistory",
+					"protocol": "http",
+					"host": [
+						"demo8720528",
+						"mockable",
+						"io"
+					],
+					"path": [
+						"weatherHistory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FInd Field",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8889/fields/a0f63e74-d7ef-4924-acb3-0e960ae9ec98",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8889",
+					"path": [
+						"fields",
+						"a0f63e74-d7ef-4924-acb3-0e960ae9ec98"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
