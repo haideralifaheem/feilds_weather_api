@@ -8,7 +8,7 @@ import com.fields.weather.fieldsweather.Model.WeatherHistory;
 import com.fields.weather.fieldsweather.Model.WeatherPolygon;
 
 public interface IAgroMoniteringService {
-    WeatherPolygon createPolygon(Field field);
+    WeatherPolygon createPolygon(String ApiKey,String url,Field field);
 
-    List<WeatherHistory> weatherHistory(String polygonId, Date startDay, Date endDay);
+    List<WeatherHistory> weatherHistory(String ApiKey,String url,String polygonId, Date startDay, Date endDay);
 }

@@ -15,14 +15,20 @@ import com.fields.weather.fieldsweather.repository.FieldRepository;
 import com.fields.weather.fieldsweather.repository.WeatherRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 
 @Service
 public class FieldService implements iFieldService {
 
-
-    private final AgroMonitoringService weatherService = new AgroMonitoringService();
+    @Value("${api.key}")
+    private String agroApiKey;
+    @Value("${api.polygon.url}")
+    private String apiCreatePolygonUrl;
+    @Value("${api.weather.url}")
+    private String apiWeatherHistoryUrl;
+    private AgroMonitoringService weatherService = new AgroMonitoringService();
     @Autowired
     private final FieldRepository fieldRepository;
 
@@ -59,7 +65,7 @@ public class FieldService implements iFieldService {
             return update(field, field.getId());
         }
         else{
-            WeatherPolygon createdPolygon = weatherService.createPolygon(field);
+            WeatherPolygon createdPolygon = weatherService.createPolygon(agroApiKey,apiCreatePolygonUrl,field);
             weatherRepository.save(createdPolygon);
             field.agroPolygon = createdPolygon  ;
             return fieldRepository.save(field);
@@ -76,7 +82,7 @@ public class FieldService implements iFieldService {
             {
                 weatherRepository.delete(oldfield.agroPolygon);
             }
-            WeatherPolygon newPolygon = weatherService.createPolygon(field);
+            WeatherPolygon newPolygon = weatherService.createPolygon(agroApiKey,apiCreatePolygonUrl,field);
             field.agroPolygon=newPolygon;
             weatherRepository.save(newPolygon);
             fieldRepository.save(field);
@@ -104,7 +110,7 @@ public class FieldService implements iFieldService {
             c.setTime(currentDate);
             c.add(Calendar.DAY_OF_MONTH, -7);
             Date startDate = c.getTime();
-            return weatherService.weatherHistory(field.agroPolygon.getId(),startDate,currentDate);
+            return weatherService.weatherHistory(agroApiKey,apiWeatherHistoryUrl,field.agroPolygon.getId(),startDate,currentDate);
         } else {
             throw new EntityNotFoundException("Field not found: " + fieldId.toString());
         }

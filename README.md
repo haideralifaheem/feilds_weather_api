@@ -36,18 +36,18 @@ You can run it (if you are using Maven) with
 $ docker build -t springio/fields_weather_rest_api .
 $ docker run -p 8888:8888 springio/fields_weather_rest_api
 ```
-
+Rest endpoint and Request calls
 ```bash
-  http://localhost:8888/fields/findAll
-  http://localhost:8888/fields/{fieldId} //Search Field by Id
-  http://localhost:8888/fields/Name/{name} //Search fields by name
-  http://localhost:8888/fields/save //Create new field and also call agro service to create new polygon
-  http://localhost:8888/fields/update/{fieldid} //Update field by calling field id and in request body field data
-  http://localhost:8888/fields/delete/{fieldid} //to delete the field with field id
+  http://{server}:{port}/fields/findAll
+  http://{server}:{port}/fields/{fieldId} //Search Field by Id
+  http://{server}:{port}/fields/Name/{name} //Search fields by name
+  http://{server}:{port}/fields/save //Create new field and also call agro service to create new polygon
+  http://{server}:{port}/fields/update/{fieldid} //Update field by calling field id and in request body field data
+  http://{server}:{port}/fields/delete/{fieldid} //to delete the field with field id
 ```
 Agro Monitering Service weather History provide weather history for last 7 days
 ```bash
-  http://localhost:8888/fields/{fieldId}/weather
+  http://{server}:{port}/fields/{fieldId}/weather
 
 ```
 Post method to Create/Update new field and also create polygon and save the new polygon into cluster and data is saved as refrence field into databse.

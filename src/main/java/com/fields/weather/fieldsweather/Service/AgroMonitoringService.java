@@ -20,24 +20,24 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 public class AgroMonitoringService implements IAgroMoniteringService {
     
-    public static String PERSONAL_API_KEY="API_Key";
-    public  static String create_polygon_Url="http://demo8720528.mockable.io/polygon";
-    public static String weather_history_Url="http://demo8720528.mockable.io/weatherHistory";
+
     private final RestTemplate restTemplate;
 
     public AgroMonitoringService() {
         this.restTemplate = new RestTemplateBuilder().build();
+       
     }
-
+    
     @Override
-    public WeatherPolygon createPolygon(Field field) {
+    public WeatherPolygon createPolygon(String ApiKey,String url,Field field) {
         //String url =  "http://demo8720528.mockable.io/polygon";
         //String url = "http://api.agromonitoring.com/agro/1.0/polygons";
 
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(create_polygon_Url)
-                .queryParam("appid", PERSONAL_API_KEY);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("appid",ApiKey);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -55,12 +55,12 @@ public class AgroMonitoringService implements IAgroMoniteringService {
     }
 
     @Override
-    public List<WeatherHistory> weatherHistory(String polygonId, Date startDay, Date endDay) {
+    public List<WeatherHistory> weatherHistory(String ApiKey,String url,String polygonId, Date startDay, Date endDay) {
         //String url = "http://demo8720528.mockable.io/weatherHistory";
         //String url = "http://api.agromonitoring.com/agro/1.0/weather/history";
 
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(weather_history_Url)
-                .queryParam("appid", PERSONAL_API_KEY)
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("appid", ApiKey)
                 .queryParam("polyid", polygonId)
                 .queryParam("start", startDay.getTime()) 
                 .queryParam("end", endDay.getTime());
