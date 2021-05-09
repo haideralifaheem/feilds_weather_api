@@ -73,6 +73,11 @@ public class FieldService implements iFieldService {
         
     }
 
+    public WeatherPolygon CreatePolygon(Field field) {
+            WeatherPolygon createdPolygon = weatherService.createPolygon(agroApiKey,apiCreatePolygonUrl,field);
+            return createdPolygon ;
+    }
+
 
     public Field update(Field field, String fieldId) {
         if (fieldRepository.existsById(fieldId)) {

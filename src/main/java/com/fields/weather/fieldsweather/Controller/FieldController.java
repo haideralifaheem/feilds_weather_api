@@ -2,6 +2,8 @@ package com.fields.weather.fieldsweather.Controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +25,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @RequestMapping("/fields")
 public class FieldController {
 
+	Logger logger = LoggerFactory.getLogger(FieldController.class);
 	@Autowired
 	private FieldService fieldService;
 
@@ -30,6 +33,7 @@ public class FieldController {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/{fieldId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Field get(@PathVariable(value = "fieldId") String fieldid) {
+		logger.info("Find field by id");
 		Field field = fieldService.findById(fieldid);
 		return field;
 	}
@@ -38,6 +42,7 @@ public class FieldController {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "Name/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Field> getbyTitle(@PathVariable(value = "name") String name) {
+		logger.info("Find fields by name");
 		List<Field> field = fieldService.findByName(name);
 		return field;
 	}
@@ -46,6 +51,7 @@ public class FieldController {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/findAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Field> findAll() {
+		logger.info("Find all fields");
 		List<Field> fields = fieldService.findAll();
 		return fields;
 	}
@@ -56,6 +62,7 @@ public class FieldController {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/save",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Field create(@RequestBody Field field) throws Exception {
+		logger.info("Creating new field");
 		Field createdField = fieldService.save(field);
 		return createdField;
 	}
@@ -64,6 +71,7 @@ public class FieldController {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/update/{fieldId}",method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Field Update(@RequestBody Field field,@PathVariable(value = "fieldId") String fieldId) throws Exception {
+		logger.info("Updating field {0}"+fieldId);
 		Field updatedField = fieldService.update(field,fieldId);
 		return updatedField;
 	}
@@ -72,6 +80,7 @@ public class FieldController {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/{fieldId}", method = RequestMethod.DELETE)
 	public void delete(@PathVariable(value = "fieldId") String fieldId) {
+		logger.info("Deleting field: "+fieldId);
 		fieldService.delete(fieldId);
 	}
 
@@ -79,6 +88,7 @@ public class FieldController {
 	@ResponseStatus(HttpStatus.OK)
 	@RequestMapping(value = "/{fieldId}/weather", method = RequestMethod.GET)
 	public List<WeatherHistory> WeatherHistory(@PathVariable(value = "fieldId") String fieldId) {
+		logger.info("Searching Weather history field: "+fieldId);
 		return fieldService.WeatherHistory(fieldId);
 	}
 }
